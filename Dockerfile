@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 RUN apt-get update && apt-get -yq dist-upgrade\
-    && apt-get install -y gcc make\
+    && apt-get install -y wget gcc make libhmsbeagle1v5 mrbayes\
     && apt-get clean\
     && rm -rf /var/lib/apt/lists/*
 

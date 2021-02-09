@@ -9,6 +9,7 @@ A tweaked version of [CSB5/GiRaF](https://github.com/CSB5/GiRaF):
 To be fixed (see issues):
 
 - The command line arguments seem not to be parsed correctly. Importantly, I can't set the output folder (which is necessary for Snakemake integration).
+- Fix the `run_mrbayes.sh` script to specify the outfile (instead of the default `in.giraf`.
 
 ## Running from a container
 
@@ -34,7 +35,10 @@ To test:
 
 ```sh
 cd testdata/h5n1
-docker run -v `pwd`:/home/jovyan/work -w /home/jovyan/work giraf giraf h5n1.giraf
+# Generate MrBayes trees
+docker run -v `pwd`:/home/jovyan/work -w /home/jovyan/work giraf run_mrbayes.sh left.nex right.nex
+# Run GiRaF
+docker run -v `pwd`:/home/jovyan/work -w /home/jovyan/work giraf giraf in.giraf
 ```
 
 ## Original README
