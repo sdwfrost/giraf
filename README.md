@@ -4,6 +4,38 @@ A tweaked version of [CSB5/GiRaF](https://github.com/CSB5/GiRaF):
 
 - Added <cstring> and <algorithm> to get the code to compile.
 - Changed the hard-coded burnin parameter to 0, as I found that I couldn't set it via the command line.
+- Added a minimal Dockerfile to allow running GiRaF in a container
+
+To be fixed (see issues):
+
+- The command line arguments seem not to be parsed correctly. Importantly, I can't set the output folder (which is necessary for Snakemake integration).
+
+## Running from a container
+
+1. Clone the repository.
+
+```sh
+git clone https://github.com/sdwfrost/giraf
+```
+
+2. Build the container locally.
+
+```sh
+docker build --no-cache -t giraf .
+```
+
+3. Run the container e.g. to see usage.
+
+```sh
+docker run -v `pwd`:/home/jovyan/work -w /home/jovyan/work giraf giraf -h
+```
+
+To test:
+
+```sh
+cd testdata/h5n1
+docker run -v `pwd`:/home/jovyan/work -w /home/jovyan/work giraf giraf h5n1.giraf
+```
 
 ## Original README
 

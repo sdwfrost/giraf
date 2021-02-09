@@ -1,11 +1,7 @@
-FROM python:3.7-slim
-
-# install the notebook package
-RUN pip install --no-cache --upgrade pip && \
-    pip install --no-cache notebook
+FROM ubuntu:20.04
 
 RUN apt-get update && apt-get -yq dist-upgrade\
-    && apt-get install -y git build-essential\
+    && apt-get install -y gcc make\
     && apt-get clean\
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,10 +24,16 @@ WORKDIR ${HOME}
 USER ${USER}
 
 RUN mkdir -p ${HOME}/.local/bin
+ENV PATH "${HOME}/.local/bin:$PATH"
 
-RUN cd /tmp\
-    && git clone http://github.com/sdwfrost/giraf\
-    && cd giraf/src\
+RUN cd ${HOME} && mkdir -p giraf/src && mkdir -p giraf/bin
+COPY src giraf/src
+COPY bin giraf/bin
+RUN cd giraf/src\
     && make\
-    && cp ./giraf ${HOME}/.local/bin
+    && cp ./giraf ${HOME}/.local/bin\
+    && cd ..\
+    && cp bin/* ${HOME}/.local/bin\
+    && cd ${HOME}\
+    && rm -rf giraf
 
