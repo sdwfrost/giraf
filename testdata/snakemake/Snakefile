@@ -1,0 +1,30 @@
+# Set number of repeats
+N = 2
+
+def repeat_runs():
+    files=[]
+    for i in range(0,N,1):
+        files.append("run_"+str(i+1)+"/left-right_report")
+    return files
+
+rule all:
+    input:
+        repeat_runs()
+
+rule giraf:
+    input:
+        "{r}/in.giraf"
+    output:
+        "{r}/left-right_report"
+    params:
+        infile="in.giraf"
+    shell:
+        "cd {wildcards.r};giraf {params.infile}"
+
+rule copy_infile:
+    input:
+        "in.giraf"
+    output:
+        "{r}/in.giraf"
+    shell:
+        "cp {input} {output}"
