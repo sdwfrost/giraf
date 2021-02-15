@@ -4,6 +4,7 @@
 #include <sstream>
 #include <cmath>
 #include <cstring>
+#include <cstdlib>
 #include "util.h"
 #include "catalog.h"
 #include "timer.h"
